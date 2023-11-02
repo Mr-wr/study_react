@@ -113,9 +113,40 @@ module.exports = function (app) {
     })
   );
 };
+----------------------------------------------------------------------
+{}表达式，
+其中number/string 
+boolean/null/undefined/Symbol/BigInt是空
+数组是每一项分别拿出来渲染，中间没有逗号的【,】
+--------------------------------------------------------------------
+ 渲染规则
+1、根据jsx创建虚拟dom
+<>
+    <div>
+      Testday01
+      <div className="pas">niaho</div>
+    </div>
+    <span style={{ color: 'red' }}>hahaha</span>
+  </>
 
 
-
+  
+import { jsx as _jsx } from "react/jsx-runtime";
+import { jsxs as _jsxs } from "react/jsx-runtime";
+import { Fragment as _Fragment } from "react/jsx-runtime";
+_jsxs(_Fragment, {
+  children: [_jsxs("div", {
+    children: ["Testday01", _jsx("div", {
+      className: "pas",
+      children: "niaho"
+    })]
+  }), _jsx("span", {
+    style: {
+      color: 'red'
+    },
+    children: "hahaha"
+  })]
+});
 
 
 

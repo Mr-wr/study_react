@@ -1,0 +1,38 @@
+1、使用new Array()出来的的不能使用迭代foreach
+
+2、流程根据jsx生成虚拟dom缓存然后渲染界面
+
+3、数据更改后重新根据jsx生成虚拟dom然后和上一次缓存的dom进行对比diff算法生成patch补丁包
+然后只渲染补丁包里面的内容
+
+4、在jsx中也可以渲染虚拟对象使用jsxs或者jsx进行创建虚拟dom元素，通过render函数变成真实的dom元素
+
+流程：1、生成虚拟dom2、通过render生成真实的dom
+
+
+5、传统的foreach只能迭代可枚举的，非symbol属性的
+可以是用es6中的Reflect.ownKeys()获取所有的属性
+
+6、可以使用dir把元素标签的属性内容显示例如dir(root)
+
+7、为元素设置属性
+元素.属性 = 属性值
+在元素的堆内存空间中新增一个属性，不会在元素dom结构中显示
+获取：元素.属性
+删除:delete 元素.属性
+
+使用元素.setAttribute(属性,属性值)会在元素dom结构中显示，但是堆内存空间找不到这个属性
+获取：getAttribute
+删除:removeAttribute
+
+
+
+
+
+
+
+
+
+
+
+
