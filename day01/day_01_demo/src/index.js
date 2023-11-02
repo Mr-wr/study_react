@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 // import './index.css';
 // import App from './App';
 // import reportWebVitals from './reportWebVitals';
-
+import '@/index.less'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // react的 strictmode严格模式

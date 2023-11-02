@@ -3,6 +3,68 @@
 npm i less less-loader@8
 2、移除sass-loader
 npm uninstall sass-loader
+============================================================================
+修改webpack.config.js配置
+1、修改less配置
+const cssRegex = /\.css$/;
+const cssModuleRegex = /\.module\.css$/;
+const lessRegex = /\.less$/;
+const lessModuleRegex = /\.module\.less$/;
+
+{
+    test: lessRegex,
+    exclude: lessModuleRegex,
+    use: getStyleLoaders(
+    {
+        importLoaders: 3,
+        sourceMap: isEnvProduction
+        ? shouldUseSourceMap
+        : isEnvDevelopment,
+        modules: {
+        mode: 'icss',
+        },
+    },
+    'less-loader'
+    ),
+    // Don't consider CSS imports dead code even if the
+    // containing package claims to have no side effects.
+    // Remove this when webpack adds a warning or an error for this.
+    // See https://github.com/webpack/webpack/issues/6571
+    sideEffects: true,
+},
+// Adds support for CSS Modules, but using SASS
+// using the extension .module.scss or .module.sass
+{
+    test: lessModuleRegex,
+    use: getStyleLoaders(
+    {
+        importLoaders: 3,
+        sourceMap: isEnvProduction
+        ? shouldUseSourceMap
+        : isEnvDevelopment,
+        modules: {
+        mode: 'local',
+        getLocalIdent: getCSSModuleLocalIdent,
+        },
+    },
+    'less-loader'
+    ),
+},
+
+--------------------------------------------------------------------------------
+2、修改路径别名
+ alias: {
+        "@": paths.appSrc,
+        // Support React Native Web
+        // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
+        "react-native": "react-native-web",
+        // Allows for better profiling with ReactDevTools
+        ...(isEnvProductionProfile && {
+          "react-dom$": "react-dom/profiling",
+          "scheduler/tracing": "scheduler/tracing-profiling",
+        }),
+        ...(modules.webpackAliases || {}),
+      },
 
 
 
