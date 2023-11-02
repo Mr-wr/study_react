@@ -66,10 +66,53 @@ const lessModuleRegex = /\.module\.less$/;
         ...(modules.webpackAliases || {}),
       },
 
+-------------------------------------------------------------
+3、cross-env
+npm i cross-env
+package.json
+"scripts": {
+    "start": "cross-env PORT=8080 node scripts/start.js",
+    "build": "node scripts/build.js",
+    "test": "node scripts/test.js"
+},
+-------------------------------------------------------
+4、浏览器兼容
+无法处理ES6内置API的兼容
+在src/index.js下
+/* 对ES6内置API兼容 */
+import 'react-app-polyfill/ie11'
+import 'react-app-polyfill/ie9'
+import 'react-app-polyfill/stable'
+----------------------------------------------------------
+5、跨域处理
+npm i http-proxy-middleware (跨域代理模块)
+webpack-dev-server的跨域代理原理也是基于他来完成的
+在src/下新建setupProxy.js
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
-
-
-
+module.exports = function (app) {
+  // 因为可能有多个代理
+  app.use(
+    // 发请求以这个开头的都
+    createProxyMiddleware('/zhi', {
+    //   target: 'https://www.zhihu.com/api/v4',
+      target: 'https://news-at.zhihu.com/api/4',
+    //   target: 'https://www.news-at.zhihu.com/api/4',
+      changeOrigin: true,
+      ws: true,
+      pathRewrite: { '^/zhi': '' },
+    })
+  );
+  app.use(
+    // 发请求以这个开头的都
+    createProxyMiddleware('/jian', {
+      target: 'https://www.jianshu.com/asimov',
+      changeOrigin: true,
+      ws: true,
+      pathRewrite: { '^/jian': '' },
+    })
+  );
+};
 
 
 
