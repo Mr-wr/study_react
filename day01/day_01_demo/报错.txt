@@ -1,0 +1,19 @@
+requires that you specify `NODE_ENV` or `BABEL_ENV` environment variables. Valid values are "development", "test", and "production". Instead, received: undefined. (While processing: 
+解决：在package.json中添加  
+"eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "parserOptions": {
+      "babelOptions": {
+        "presets": [
+          [
+            "babel-preset-react-app",
+            false
+          ],
+          "babel-preset-react-app/prod"
+        ]
+      }
+    }
+  },
